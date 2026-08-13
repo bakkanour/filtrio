@@ -1,0 +1,116 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Design world: "Graduated" — lab glassware + logbook (see DESIGN.md for the
+ * mechanism: etched-tick fills, ruled logbook history, calibrated numerals).
+ * Palette: BRITA-family blue + white, sampled from brita.com's own brand blues
+ * (navy #002A53, blue #2575D6, sky tints) rather than invented. Light mode is
+ * white + blue; dark mode is BRITA's own navy as the ground — its own
+ * rendition, not an inverted palette.
+ */
+:root {
+  --paper: #f6fafd;
+  --paper-raised: #ffffff;
+  --paper-sunken: #e9f3fa;
+  --rule: #cfe1ee;
+  --rule-strong: #a9c8de;
+  --ink: #0a2a4a;
+  --ink-muted: #4d6a85;
+
+  --accent: #2575d6;
+  --accent-strong: #113993;
+
+  --status-normal: #1a8a5e;
+  --status-normal-tint: #e3f4ec;
+  --status-warning: #b5790f;
+  --status-warning-tint: #f8edd9;
+  --status-danger: #c23a3a;
+  --status-danger-tint: #f9e5e3;
+}
+
+/* ThemeContext always applies/removes this class explicitly (from storage or
+   system preference at mount), so this is the single source of dark tokens. */
+.dark {
+  --paper: #06192e;
+  --paper-raised: #0d2c4d;
+  --paper-sunken: #041220;
+  --rule: #1e4870;
+  --rule-strong: #2c5d8f;
+  --ink: #eef6fc;
+  --ink-muted: #8fb3d1;
+
+  --accent: #5cc3ff;
+  --accent-strong: #93e1ff;
+
+  --status-normal: #4ecb92;
+  --status-normal-tint: rgb(78 203 146 / 0.16);
+  --status-warning: #eab54a;
+  --status-warning-tint: rgb(234 181 74 / 0.16);
+  --status-danger: #ec7468;
+  --status-danger-tint: rgb(236 116 104 / 0.16);
+}
+
+@theme {
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-paper-sunken: var(--paper-sunken);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+
+  --color-status-normal: var(--status-normal);
+  --color-status-normal-tint: var(--status-normal-tint);
+  --color-status-warning: var(--status-warning);
+  --color-status-warning-tint: var(--status-warning-tint);
+  --color-status-danger: var(--status-danger);
+  --color-status-danger-tint: var(--status-danger-tint);
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  .dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--paper);
+  }
+
+  /* Tabular, calibrated look for every measured quantity (days, liters, %). */
+  .font-data {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+}
+
+@layer utilities {
+  /* Fine etched ticks under a graduated fill — see GraduatedBar. */
+  .tick-scale {
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--rule-strong) 0,
+      var(--rule-strong) 1px,
+      transparent 1px,
+      transparent 25%
+    );
+  }
+}

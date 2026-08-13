@@ -1,0 +1,39 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvb
+*.njsproj
+*.sln
+*.sw?
+
+coverage
+
+# AI tooling config/skills — local dev setup only, not part of the app.
+# Public repo: never commit this (also covers any local secrets/tokens these
+# tools may cache).
+.claude/
+.cursor/
+.kiro/
+.impeccable/
+
+# Env files — never commit secrets/tokens to this public repo.
+.env
+.env.*
+!.env.example

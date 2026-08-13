@@ -1,0 +1,3 @@
+{
+  "ignorePatterns": [".claude/**", ".cursor/**", ".kiro/**", ".impeccable/**", "dist/**"]
+}

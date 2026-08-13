@@ -1,0 +1,169 @@
+{
+  "common": {
+    "appName": "Filtrio",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "add": "Ajouter",
+    "close": "Fermer",
+    "today": "Aujourd'hui",
+    "liters": "L",
+    "days": "jours",
+    "day": "jour",
+    "loading": "Chargement...",
+    "confirmDelete": "Confirmer la suppression ?"
+  },
+  "nav": {
+    "dashboard": "Mes filtres",
+    "statistics": "Statistiques"
+  },
+  "objectTypes": {
+    "pitcher": "Carafe",
+    "bottle": "Bouteille",
+    "flask": "Gourde",
+    "filtration_system": "Système de filtration",
+    "other": "Autre contenant"
+  },
+  "dashboard": {
+    "title": "Mes filtres",
+    "addObject": "+ Nouvel objet",
+    "quickFill": "+ Remplissage",
+    "replaceFilterButton": "Remplacer le filtre",
+    "installFilterButton": "Installer un filtre",
+    "litersRemaining": "{{liters}} L restants",
+    "daysRemaining": "{{days}} j restants",
+    "noObjects": "Aucun objet pour le moment. Créez-en un pour commencer.",
+    "noActiveFilter": "Aucun filtre installé",
+    "time": "Temps",
+    "volume": "Volume",
+    "cycleUsed": "du cycle utilisé",
+    "activeFilter": "Filtre actif"
+  },
+  "objectForm": {
+    "createTitle": "Nouvel objet",
+    "editTitle": "Modifier l'objet",
+    "preset": "Modèle",
+    "presetCustom": "Personnalisé",
+    "name": "Nom",
+    "namePlaceholder": "Ex. Carafe cuisine",
+    "type": "Type",
+    "capacityLiters": "Volume filtré par remplissage (L)",
+    "totalCapacityLiters": "Capacité totale du contenant (L)",
+    "totalCapacityLitersHint": "Optionnel. Volume physique total, pour vérifier la cohérence avec le volume filtré.",
+    "volumeConsistencyOk": "Valeurs cohérentes",
+    "volumeConsistencyError": "Le volume filtré ne peut pas être supérieur à la capacité totale du contenant.",
+    "invalidInput": "Veuillez saisir un nom et un volume valides.",
+    "submit": "Créer l'objet"
+  },
+  "filterForm": {
+    "installTitle": "Nouveau filtre",
+    "replaceTitle": "Remplacer le filtre",
+    "preset": "Modèle",
+    "presetCustom": "Personnalisé",
+    "filterName": "Filtre",
+    "filterNamePlaceholder": "Ex. Mon filtre",
+    "durationDays": "Durée maximale (jours)",
+    "capacityLiters": "Capacité maximale (L)",
+    "timeControl": "Contrôle par durée",
+    "volumeControl": "Contrôle par volume",
+    "strategy": "Stratégie de déclenchement",
+    "strategyOr": "OR — dès qu'une limite est atteinte",
+    "strategyAnd": "AND — quand toutes les limites sont atteintes",
+    "strategyManual": "MANUAL — je décide moi-même",
+    "installedAt": "Date d'installation",
+    "installedAtHint": "Date utilisée pour les calculs. Ne peut pas être future.",
+    "installButton": "Installer le filtre",
+    "replaceButton": "Remplacer le filtre",
+    "atLeastOneControl": "Activez au moins un contrôle (durée ou volume).",
+    "futureDateError": "La date ne peut pas être dans le futur.",
+    "replacementBeforeInstallError": "La date de remplacement ne peut pas être antérieure à l'installation du filtre actuel.",
+    "warningThreshold": "Seuil d'alerte (%)",
+    "replacementReason": "Pourquoi remplacez-vous le filtre ?",
+    "reasons": {
+      "time_limit": "Temps atteint",
+      "volume_limit": "Volume atteint",
+      "both": "Les deux",
+      "preventive": "Remplacement préventif",
+      "other": "Autre"
+    }
+  },
+  "objectDetail": {
+    "currentFilter": "Filtre",
+    "time": "Temps",
+    "volume": "Volume",
+    "fills": "Remplissages",
+    "status": "Statut",
+    "mostAdvancedControl": "Contrôle le plus avancé : {{control}}",
+    "controlTime": "Temps",
+    "controlVolume": "Volume",
+    "addFillFull": "+1 remplissage",
+    "addFillHalf": "+0.5 remplissage",
+    "customVolumeLabel": "Ajouter un volume personnalisé",
+    "customVolumePlaceholder": "Volume (L)",
+    "estimatedVolumeNotice": "Volume estimé à partir des remplissages, pas une mesure physique exacte.",
+    "history": "Historique",
+    "viewHistory": "Voir l'historique des filtres"
+  },
+  "status": {
+    "normal": "NORMAL",
+    "warning": "À REMPLACER BIENTÔT",
+    "expired": "REMPLACEMENT RECOMMANDÉ"
+  },
+  "alerts": {
+    "title": "Remplacement recommandé",
+    "volumeLimitReached": "La limite de volume est atteinte : {{current}} / {{limit}} L",
+    "volumeLimitNotReached": "La limite de volume n'est pas encore atteinte : {{current}} / {{limit}} L",
+    "timeLimitReached": "La limite de temps est atteinte : {{current}} / {{limit}} jours",
+    "timeLimitNotReached": "La limite de temps n'est pas encore atteinte : {{current}} / {{limit}} jours"
+  },
+  "fillHistory": {
+    "title": "Historique des remplissages",
+    "empty": "Aucun remplissage enregistré.",
+    "editTitle": "Modifier le remplissage",
+    "volumeLiters": "Volume (L)",
+    "date": "Date"
+  },
+  "cycleHistory": {
+    "title": "Historique des filtres",
+    "current": "Filtre actuel",
+    "active": "actif",
+    "previous": "Filtre précédent",
+    "actualDuration": "Durée réelle",
+    "volumeConsumed": "Volume consommé",
+    "fillCount": "Nombre de remplissages",
+    "reason": "Raison du remplacement",
+    "noReason": "Non renseignée"
+  },
+  "statistics": {
+    "title": "Statistiques",
+    "totalVolume": "Volume filtré total",
+    "totalFills": "Nombre total de remplissages",
+    "avgDuration": "Durée moyenne d'un filtre",
+    "avgVolume": "Volume moyen par filtre",
+    "filtersUsed": "Nombre de filtres utilisés",
+    "thisMonth": "Ce mois-ci",
+    "volumeFiltered": "Volume filtré",
+    "fills": "Remplissages",
+    "noData": "Pas encore de données à afficher."
+  },
+  "theme": {
+    "light": "Clair",
+    "dark": "Sombre"
+  },
+  "presets": {
+    "objects": {
+      "pitcherSmall": "Petite carafe (1.0 L)",
+      "pitcherStandard": "Carafe standard (1.5 L)",
+      "pitcherLarge": "Grande carafe (1.4 L filtré / 2.4 L total)",
+      "bottleStandard": "Gourde standard (0.75 L)",
+      "flaskStandard": "Gourde isotherme (0.5 L)",
+      "filtrationSystem": "Système de filtration (5 L)"
+    },
+    "filters": {
+      "filterCompact": "Cartouche compacte (14 j / 75 L)",
+      "filterStandard": "Cartouche standard (28 j / 150 L)",
+      "filterLongLife": "Cartouche longue durée (60 j / 300 L)"
+    }
+  }
+}

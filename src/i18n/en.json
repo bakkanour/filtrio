@@ -1,0 +1,169 @@
+{
+  "common": {
+    "appName": "Filtrio",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "close": "Close",
+    "today": "Today",
+    "liters": "L",
+    "days": "days",
+    "day": "day",
+    "loading": "Loading...",
+    "confirmDelete": "Confirm deletion?"
+  },
+  "nav": {
+    "dashboard": "My filters",
+    "statistics": "Statistics"
+  },
+  "objectTypes": {
+    "pitcher": "Pitcher",
+    "bottle": "Bottle",
+    "flask": "Flask",
+    "filtration_system": "Filtration system",
+    "other": "Other container"
+  },
+  "dashboard": {
+    "title": "My filters",
+    "addObject": "+ New object",
+    "quickFill": "+ Fill",
+    "replaceFilterButton": "Replace filter",
+    "installFilterButton": "Install a filter",
+    "litersRemaining": "{{liters}} L remaining",
+    "daysRemaining": "{{days}} d remaining",
+    "noObjects": "No objects yet. Create one to get started.",
+    "noActiveFilter": "No filter installed",
+    "time": "Time",
+    "volume": "Volume",
+    "cycleUsed": "of cycle used",
+    "activeFilter": "Active filter"
+  },
+  "objectForm": {
+    "createTitle": "New object",
+    "editTitle": "Edit object",
+    "preset": "Template",
+    "presetCustom": "Custom",
+    "name": "Name",
+    "namePlaceholder": "E.g. Kitchen pitcher",
+    "type": "Type",
+    "capacityLiters": "Filtered volume per fill (L)",
+    "totalCapacityLiters": "Container total capacity (L)",
+    "totalCapacityLitersHint": "Optional. Physical total volume, to check consistency with the filtered volume.",
+    "volumeConsistencyOk": "Values are consistent",
+    "volumeConsistencyError": "The filtered volume cannot exceed the container's total capacity.",
+    "invalidInput": "Please enter a valid name and volume.",
+    "submit": "Create object"
+  },
+  "filterForm": {
+    "installTitle": "New filter",
+    "replaceTitle": "Replace filter",
+    "preset": "Template",
+    "presetCustom": "Custom",
+    "filterName": "Filter",
+    "filterNamePlaceholder": "E.g. My filter",
+    "durationDays": "Maximum duration (days)",
+    "capacityLiters": "Maximum capacity (L)",
+    "timeControl": "Time control",
+    "volumeControl": "Volume control",
+    "strategy": "Trigger strategy",
+    "strategyOr": "OR — as soon as one limit is reached",
+    "strategyAnd": "AND — once every limit is reached",
+    "strategyManual": "MANUAL — I decide myself",
+    "installedAt": "Installation date",
+    "installedAtHint": "Date used for calculations. Cannot be in the future.",
+    "installButton": "Install filter",
+    "replaceButton": "Replace filter",
+    "atLeastOneControl": "Enable at least one control (time or volume).",
+    "futureDateError": "The date cannot be in the future.",
+    "replacementBeforeInstallError": "The replacement date cannot be before the current filter was installed.",
+    "warningThreshold": "Warning threshold (%)",
+    "replacementReason": "Why are you replacing the filter?",
+    "reasons": {
+      "time_limit": "Time limit reached",
+      "volume_limit": "Volume limit reached",
+      "both": "Both",
+      "preventive": "Preventive replacement",
+      "other": "Other"
+    }
+  },
+  "objectDetail": {
+    "currentFilter": "Filter",
+    "time": "Time",
+    "volume": "Volume",
+    "fills": "Fills",
+    "status": "Status",
+    "mostAdvancedControl": "Most advanced control: {{control}}",
+    "controlTime": "Time",
+    "controlVolume": "Volume",
+    "addFillFull": "+1 fill",
+    "addFillHalf": "+0.5 fill",
+    "customVolumeLabel": "Add a custom volume",
+    "customVolumePlaceholder": "Volume (L)",
+    "estimatedVolumeNotice": "Volume estimated from fills, not an exact physical measurement.",
+    "history": "History",
+    "viewHistory": "View filter history"
+  },
+  "status": {
+    "normal": "NORMAL",
+    "warning": "REPLACE SOON",
+    "expired": "REPLACEMENT RECOMMENDED"
+  },
+  "alerts": {
+    "title": "Replacement recommended",
+    "volumeLimitReached": "The volume limit is reached: {{current}} / {{limit}} L",
+    "volumeLimitNotReached": "The volume limit is not reached yet: {{current}} / {{limit}} L",
+    "timeLimitReached": "The time limit is reached: {{current}} / {{limit}} days",
+    "timeLimitNotReached": "The time limit is not reached yet: {{current}} / {{limit}} days"
+  },
+  "fillHistory": {
+    "title": "Fill history",
+    "empty": "No fill recorded yet.",
+    "editTitle": "Edit fill",
+    "volumeLiters": "Volume (L)",
+    "date": "Date"
+  },
+  "cycleHistory": {
+    "title": "Filter history",
+    "current": "Current filter",
+    "active": "active",
+    "previous": "Previous filter",
+    "actualDuration": "Actual duration",
+    "volumeConsumed": "Volume consumed",
+    "fillCount": "Number of fills",
+    "reason": "Replacement reason",
+    "noReason": "Not provided"
+  },
+  "statistics": {
+    "title": "Statistics",
+    "totalVolume": "Total filtered volume",
+    "totalFills": "Total number of fills",
+    "avgDuration": "Average filter duration",
+    "avgVolume": "Average volume per filter",
+    "filtersUsed": "Number of filters used",
+    "thisMonth": "This month",
+    "volumeFiltered": "Volume filtered",
+    "fills": "Fills",
+    "noData": "No data to show yet."
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "presets": {
+    "objects": {
+      "pitcherSmall": "Small pitcher (1.0 L)",
+      "pitcherStandard": "Standard pitcher (1.5 L)",
+      "pitcherLarge": "Large pitcher (1.4 L filtered / 2.4 L total)",
+      "bottleStandard": "Standard bottle (0.75 L)",
+      "flaskStandard": "Insulated flask (0.5 L)",
+      "filtrationSystem": "Filtration system (5 L)"
+    },
+    "filters": {
+      "filterCompact": "Compact cartridge (14 d / 75 L)",
+      "filterStandard": "Standard cartridge (28 d / 150 L)",
+      "filterLongLife": "Long-life cartridge (60 d / 300 L)"
+    }
+  }
+}
