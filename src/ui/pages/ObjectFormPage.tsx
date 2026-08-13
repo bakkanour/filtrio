@@ -1,5 +1,5 @@
-import { useMemo, useState, type FormEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useMemo, useState, type FormEvent } from 'react'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAppData } from '../context/AppDataContext'
 import { Card } from '../components/Card'
@@ -13,7 +13,11 @@ const CUSTOM_PRESET = 'custom'
 export function ObjectFormPage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { createObject } = useAppData()
+  const { id } = useParams<{ id: string }>()
+  const { objects, loading, createObject, updateObject } = useAppData()
+
+  const isEditing = Boolean(id)
+  const existingObject = isEditing ? objects.find((o) => o.id === id) : undefined
 
   const [presetId, setPresetId] = useState(CUSTOM_PRESET)
   const [name, setName] = useState('')
@@ -21,6 +25,17 @@ export function ObjectFormPage() {
   const [capacityLiters, setCapacityLiters] = useState('1.5')
   const [totalCapacityLiters, setTotalCapacityLiters] = useState('')
   const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (existingObject) {
+      setName(existingObject.name)
+      setType(existingObject.type)
+      setCapacityLiters(String(existingObject.capacityLiters))
+      setTotalCapacityLiters(
+        existingObject.totalCapacityLiters !== undefined ? String(existingObject.totalCapacityLiters) : '',
+      )
+    }
+  }, [existingObject])
 
   const consistency = useMemo(() => {
     const filtered = Number(capacityLiters)
@@ -30,14 +45,17 @@ export function ObjectFormPage() {
     return 'ok' as const
   }, [capacityLiters, totalCapacityLiters])
 
-  function applyPreset(id: string) {
-    setPresetId(id)
-    const preset = OBJECT_PRESETS.find((p) => p.id === id)
+  function applyPreset(presetIdValue: string) {
+    setPresetId(presetIdValue)
+    const preset = OBJECT_PRESETS.find((p) => p.id === presetIdValue)
     if (!preset) return
     setType(preset.type)
     setCapacityLiters(String(preset.capacityLiters))
     setTotalCapacityLiters(preset.totalCapacityLiters !== undefined ? String(preset.totalCapacityLiters) : '')
   }
+
+  if (loading) return null
+  if (isEditing && !existingObject) return <Navigate to="/" replace />
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
@@ -54,31 +72,37 @@ export function ObjectFormPage() {
     }
 
     const total = totalCapacityLiters.trim() ? Number(totalCapacityLiters) : undefined
-    const object = await createObject({
-      name: name.trim(),
-      type,
-      capacityLiters: capacity,
-      totalCapacityLiters: total,
-    })
-    navigate(`/objects/${object.id}/install`)
+    const input = { name: name.trim(), type, capacityLiters: capacity, totalCapacityLiters: total }
+
+    if (isEditing && id) {
+      await updateObject(id, input)
+      navigate(`/objects/${id}`)
+    } else {
+      const object = await createObject(input)
+      navigate(`/objects/${object.id}/install`)
+    }
   }
 
   return (
     <div className="mx-auto max-w-lg space-y-6">
-      <h1 className="text-xl font-semibold text-ink">{t('objectForm.createTitle')}</h1>
+      <h1 className="text-xl font-semibold text-ink">
+        {isEditing ? t('objectForm.editTitle') : t('objectForm.createTitle')}
+      </h1>
       <Card>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <label className="block text-sm">
-            <span className={labelClass}>{t('objectForm.preset')}</span>
-            <select value={presetId} onChange={(e) => applyPreset(e.target.value)} className={inputClass}>
-              <option value={CUSTOM_PRESET}>{t('objectForm.presetCustom')}</option>
-              {OBJECT_PRESETS.map((preset) => (
-                <option key={preset.id} value={preset.id}>
-                  {t(preset.nameKey)}
-                </option>
-              ))}
-            </select>
-          </label>
+          {!isEditing && (
+            <label className="block text-sm">
+              <span className={labelClass}>{t('objectForm.preset')}</span>
+              <select value={presetId} onChange={(e) => applyPreset(e.target.value)} className={inputClass}>
+                <option value={CUSTOM_PRESET}>{t('objectForm.presetCustom')}</option>
+                {OBJECT_PRESETS.map((preset) => (
+                  <option key={preset.id} value={preset.id}>
+                    {t(preset.nameKey)}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
 
           <label className="block text-sm">
             <span className={labelClass}>{t('objectForm.name')}</span>
@@ -102,21 +126,21 @@ export function ObjectFormPage() {
             </select>
           </label>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <label className="block text-sm">
-              <span className={labelClass}>{t('objectForm.capacityLiters')}</span>
-              <input
-                type="number"
-                step="0.01"
-                min="0"
-                inputMode="decimal"
-                value={capacityLiters}
-                onChange={(e) => setCapacityLiters(e.target.value)}
-                required
-                className={`font-data ${inputClass}`}
-              />
-            </label>
+          <label className="block text-sm">
+            <span className={labelClass}>{t('objectForm.capacityLiters')}</span>
+            <input
+              type="number"
+              step="0.01"
+              min="0"
+              inputMode="decimal"
+              value={capacityLiters}
+              onChange={(e) => setCapacityLiters(e.target.value)}
+              required
+              className={`font-data ${inputClass}`}
+            />
+          </label>
 
+          <div>
             <label className="block text-sm">
               <span className={labelClass}>{t('objectForm.totalCapacityLiters')}</span>
               <input
@@ -129,8 +153,8 @@ export function ObjectFormPage() {
                 className={`font-data ${inputClass}`}
               />
             </label>
+            <p className="mt-1 text-xs text-ink-muted">{t('objectForm.totalCapacityLitersHint')}</p>
           </div>
-          <p className="-mt-2 text-xs text-ink-muted">{t('objectForm.totalCapacityLitersHint')}</p>
 
           {consistency === 'ok' && (
             <p className="text-sm text-status-normal">✓ {t('objectForm.volumeConsistencyOk')}</p>
@@ -142,7 +166,7 @@ export function ObjectFormPage() {
           {error && <p className="text-sm text-status-danger">{error}</p>}
 
           <Button type="submit" disabled={consistency === 'error'} className="w-full">
-            {t('objectForm.submit')}
+            {isEditing ? t('objectForm.saveButton') : t('objectForm.submit')}
           </Button>
         </form>
       </Card>

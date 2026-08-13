@@ -1,4 +1,4 @@
-import { Link, Navigate, useParams } from 'react-router-dom'
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAppData } from '../context/AppDataContext'
 import { useObjectCycle } from '../hooks/useObjectCycle'
@@ -20,12 +20,21 @@ const HERO_COLOR = {
 export function ObjectDetailPage() {
   const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
-  const { objects, filters, fillEvents, loading } = useAppData()
+  const navigate = useNavigate()
+  const { objects, filters, fillEvents, loading, removeObject } = useAppData()
   const usage = useObjectCycle(id ?? '')
 
   const object = objects.find((o) => o.id === id)
   if (loading) return null
   if (!object || !id) return <Navigate to="/" replace />
+
+  async function handleDelete() {
+    if (!id) return
+    if (window.confirm(t('objectForm.deleteConfirm'))) {
+      await removeObject(id)
+      navigate('/')
+    }
+  }
 
   const filter = usage ? filters.find((f) => f.id === usage.cycle.filterId) : undefined
   const cycleFillEvents = usage ? fillEvents.filter((e) => e.filterCycleId === usage.cycle.id) : []
@@ -38,11 +47,21 @@ export function ObjectDetailPage() {
 
   return (
     <div className="mx-auto max-w-2xl space-y-8">
-      <div>
-        <h1 className="text-xl font-semibold text-ink">{object.name}</h1>
-        <p className="text-sm text-ink-muted">
-          {t(`objectTypes.${object.type}`)} · {formatLiters(object.capacityLiters)} L
-        </p>
+      <div className="flex items-start justify-between gap-2">
+        <div>
+          <h1 className="text-xl font-semibold text-ink">{object.name}</h1>
+          <p className="text-sm text-ink-muted">
+            {t(`objectTypes.${object.type}`)} · {formatLiters(object.capacityLiters)} L
+          </p>
+        </div>
+        <div className="flex shrink-0 gap-3 pt-1 text-sm">
+          <Link to={`/objects/${id}/edit`} className="text-ink-muted hover:text-ink">
+            {t('common.edit')}
+          </Link>
+          <button type="button" onClick={handleDelete} className="text-status-danger/80 hover:text-status-danger">
+            {t('common.delete')}
+          </button>
+        </div>
       </div>
 
       {!usage && (

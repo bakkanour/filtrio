@@ -54,7 +54,9 @@
     "volumeConsistencyOk": "Values are consistent",
     "volumeConsistencyError": "The filtered volume cannot exceed the container's total capacity.",
     "invalidInput": "Please enter a valid name and volume.",
-    "submit": "Create object"
+    "submit": "Create object",
+    "saveButton": "Save changes",
+    "deleteConfirm": "Delete this object? Its history and fills will also be deleted."
   },
   "filterForm": {
     "installTitle": "New filter",
@@ -153,9 +155,10 @@
   },
   "presets": {
     "objects": {
-      "pitcherSmall": "Small pitcher (1.0 L)",
-      "pitcherStandard": "Standard pitcher (1.5 L)",
-      "pitcherLarge": "Large pitcher (1.4 L filtered / 2.4 L total)",
+      "styleEssential": "BRITA Style Essential (1.4 L filtered / 2.4 L total)",
+      "marella": "BRITA Marella (1.4 L filtered / 2.4 L total)",
+      "marellaXl": "BRITA Marella XL (2 L filtered / 3.5 L total)",
+      "aluna": "BRITA Aluna (1.4 L filtered / 2.4 L total)",
       "bottleStandard": "Standard bottle (0.75 L)",
       "flaskStandard": "Insulated flask (0.5 L)",
       "filtrationSystem": "Filtration system (5 L)"

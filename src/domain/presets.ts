@@ -18,10 +18,14 @@ export type FilterPreset = {
   capacityLiters?: number
 }
 
+// Pitcher specs are real BRITA model figures (brita.fr product pages), since
+// picking a preset by a recognizable model name is the point — presets stay
+// user-editable starting points, never treated as authoritative facts.
 export const OBJECT_PRESETS: ObjectPreset[] = [
-  { id: 'pitcher-small', nameKey: 'presets.objects.pitcherSmall', type: 'pitcher', capacityLiters: 1.0, totalCapacityLiters: 1.2 },
-  { id: 'pitcher-standard', nameKey: 'presets.objects.pitcherStandard', type: 'pitcher', capacityLiters: 1.5, totalCapacityLiters: 1.7 },
-  { id: 'pitcher-large', nameKey: 'presets.objects.pitcherLarge', type: 'pitcher', capacityLiters: 1.4, totalCapacityLiters: 2.4 },
+  { id: 'style-essential', nameKey: 'presets.objects.styleEssential', type: 'pitcher', capacityLiters: 1.4, totalCapacityLiters: 2.4 },
+  { id: 'marella', nameKey: 'presets.objects.marella', type: 'pitcher', capacityLiters: 1.4, totalCapacityLiters: 2.4 },
+  { id: 'marella-xl', nameKey: 'presets.objects.marellaXl', type: 'pitcher', capacityLiters: 2.0, totalCapacityLiters: 3.5 },
+  { id: 'aluna', nameKey: 'presets.objects.aluna', type: 'pitcher', capacityLiters: 1.4, totalCapacityLiters: 2.4 },
   { id: 'bottle-standard', nameKey: 'presets.objects.bottleStandard', type: 'bottle', capacityLiters: 0.75, totalCapacityLiters: 0.8 },
   { id: 'flask-standard', nameKey: 'presets.objects.flaskStandard', type: 'flask', capacityLiters: 0.5 },
   { id: 'filtration-system', nameKey: 'presets.objects.filtrationSystem', type: 'filtration_system', capacityLiters: 5, totalCapacityLiters: 5.5 },

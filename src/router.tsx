@@ -16,6 +16,7 @@ export const router = createBrowserRouter(
         { index: true, element: <Dashboard /> },
         { path: 'objects/new', element: <ObjectFormPage /> },
         { path: 'objects/:id', element: <ObjectDetailPage /> },
+        { path: 'objects/:id/edit', element: <ObjectFormPage /> },
         { path: 'objects/:id/install', element: <InstallFilterPage /> },
         { path: 'objects/:id/history', element: <CycleHistoryPage /> },
         { path: 'statistics', element: <StatisticsPage /> },

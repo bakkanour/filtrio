@@ -1,6 +1,6 @@
 import type { ControlEvaluation, ControlStatus, GlobalStatus, TimeUsage, TriggerMode, VolumeUsage } from './types'
 
-export const DEFAULT_WARNING_THRESHOLD_PERCENT = 80
+export const DEFAULT_WARNING_THRESHOLD_PERCENT = 90
 
 function statusFromPercentage(
   percentage: number | null,

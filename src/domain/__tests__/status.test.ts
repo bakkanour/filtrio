@@ -21,8 +21,8 @@ describe('evaluateTimeStatus', () => {
     expect(evaluateTimeStatus(usage, true).status).toBe('normal')
   })
 
-  it('is warning at/above the 80% default threshold', () => {
-    const usage = calculateTimeUsage('2026-08-01', '2026-08-24', 28) // 23/28 = 82%
+  it('is warning at/above the 90% default threshold', () => {
+    const usage = calculateTimeUsage('2026-08-01', '2026-08-27', 28) // 26/28 = 92.9%
     expect(evaluateTimeStatus(usage, true).status).toBe('warning')
   })
 
