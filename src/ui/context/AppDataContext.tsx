@@ -2,7 +2,13 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import type { FillEvent, Filter, FilterCycle, ReplacementReason, WaterObject } from '../../domain/types'
 import { createLocalStorageRepositories } from '../../repository'
 import { createServices, type Services } from '../../services'
-import type { FillInput, FilterInput, InstallFilterInput, WaterObjectInput } from '../../services/validation'
+import type {
+  EditFilterCycleInput,
+  FillInput,
+  FilterInput,
+  InstallFilterInput,
+  WaterObjectInput,
+} from '../../services/validation'
 
 type AppDataState = {
   objects: WaterObject[]
@@ -20,6 +26,7 @@ type AppDataValue = AppDataState & {
   createFilter: (input: FilterInput) => Promise<Filter>
   installFilter: (input: InstallFilterInput) => Promise<FilterCycle>
   replaceFilter: (input: InstallFilterInput, reason: ReplacementReason) => Promise<FilterCycle>
+  updateCycle: (cycleId: string, input: EditFilterCycleInput) => Promise<FilterCycle>
   addFill: (input: FillInput, objectCapacityLiters: number) => Promise<FillEvent>
   updateFill: (
     id: string,
@@ -97,6 +104,11 @@ export function AppDataProvider({ children }: { children: ReactNode }) {
           cycles: [...s.cycles.map((c) => (c.id === closed.id ? closed : c)), created],
         }))
         return created
+      },
+      async updateCycle(cycleId, input) {
+        const cycle = await services.filterCycles.updateCycle(cycleId, input)
+        setState((s) => ({ ...s, cycles: s.cycles.map((c) => (c.id === cycleId ? cycle : c)) }))
+        return cycle
       },
       async addFill(input, objectCapacityLiters) {
         const event = await services.fillEvents.addFill(input, objectCapacityLiters)

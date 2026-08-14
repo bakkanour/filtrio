@@ -19,18 +19,48 @@ describe('FillQuickActions', () => {
     window.localStorage.clear()
   })
 
-  it('records a +1.5L fill event when clicking the full-fill button', async () => {
+  it('records a +1.5L fill event when clicking the full-container button', async () => {
     const user = userEvent.setup()
     renderWithProviders(
       <FillQuickActions objectId="obj-1" filterCycleId="cycle-1" objectCapacityLiters={1.5} />,
     )
 
-    await user.click(screen.getByText(i18n.t('objectDetail.addFillFull')))
+    await user.click(screen.getByText(i18n.t('objectDetail.addFillFull', { liters: '1.5' })))
 
     await waitFor(() => {
       const stored = JSON.parse(window.localStorage.getItem('filtrio:v1:fillEvents') ?? '[]')
       expect(stored).toHaveLength(1)
       expect(stored[0].volumeLiters).toBe(1.5)
+    })
+  })
+
+  it('records a fixed 1L fill event when clicking the +1L button', async () => {
+    const user = userEvent.setup()
+    renderWithProviders(
+      <FillQuickActions objectId="obj-1" filterCycleId="cycle-1" objectCapacityLiters={1.5} />,
+    )
+
+    await user.click(screen.getByText(i18n.t('objectDetail.addFillOneLiter')))
+
+    await waitFor(() => {
+      const stored = JSON.parse(window.localStorage.getItem('filtrio:v1:fillEvents') ?? '[]')
+      expect(stored).toHaveLength(1)
+      expect(stored[0].volumeLiters).toBe(1)
+    })
+  })
+
+  it('records a fixed 0.5L fill event when clicking the +0.5L button', async () => {
+    const user = userEvent.setup()
+    renderWithProviders(
+      <FillQuickActions objectId="obj-1" filterCycleId="cycle-1" objectCapacityLiters={1.5} />,
+    )
+
+    await user.click(screen.getByText(i18n.t('objectDetail.addFillHalfLiter')))
+
+    await waitFor(() => {
+      const stored = JSON.parse(window.localStorage.getItem('filtrio:v1:fillEvents') ?? '[]')
+      expect(stored).toHaveLength(1)
+      expect(stored[0].volumeLiters).toBe(0.5)
     })
   })
 

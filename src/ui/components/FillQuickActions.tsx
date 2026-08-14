@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useAppData } from '../context/AppDataContext'
 import { Button } from './Button'
 import { inputClass } from './inputClass'
+import { formatLiters } from '../lib/format'
 
 type FillQuickActionsProps = {
   objectId: string
@@ -28,10 +29,20 @@ export function FillQuickActions({
     window.setTimeout(() => setConfirmed(false), 900)
   }
 
-  async function addRatioFill(fillRatio: number) {
+  async function addVolumeFill(volumeLiters: number) {
     setSubmitting(true)
     try {
-      await addFill({ objectId, filterCycleId, fillRatio }, objectCapacityLiters)
+      await addFill({ objectId, filterCycleId, volumeLiters }, objectCapacityLiters)
+      flashConfirmed()
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  async function addFullContainerFill() {
+    setSubmitting(true)
+    try {
+      await addFill({ objectId, filterCycleId, fillRatio: 1 }, objectCapacityLiters)
       flashConfirmed()
     } finally {
       setSubmitting(false)
@@ -55,11 +66,14 @@ export function FillQuickActions({
   return (
     <div className={compact ? 'flex flex-wrap items-center gap-2' : 'space-y-3'}>
       <div className="flex flex-wrap items-center gap-2">
-        <Button type="button" disabled={submitting} onClick={() => addRatioFill(1)}>
-          {t('objectDetail.addFillFull')}
+        <Button type="button" disabled={submitting} onClick={addFullContainerFill}>
+          {t('objectDetail.addFillFull', { liters: formatLiters(objectCapacityLiters) })}
         </Button>
-        <Button type="button" variant="secondary" disabled={submitting} onClick={() => addRatioFill(0.5)}>
-          {t('objectDetail.addFillHalf')}
+        <Button type="button" variant="secondary" disabled={submitting} onClick={() => addVolumeFill(1)}>
+          {t('objectDetail.addFillOneLiter')}
+        </Button>
+        <Button type="button" variant="secondary" disabled={submitting} onClick={() => addVolumeFill(0.5)}>
+          {t('objectDetail.addFillHalfLiter')}
         </Button>
         <span
           className={`text-sm font-medium text-status-normal transition-opacity duration-300 ${confirmed ? 'opacity-100' : 'opacity-0'}`}

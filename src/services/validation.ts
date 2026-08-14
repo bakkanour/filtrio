@@ -41,6 +41,21 @@ export const installFilterInputSchema = z
   })
 export type InstallFilterInput = z.infer<typeof installFilterInputSchema>
 
+export const editFilterCycleInputSchema = z
+  .object({
+    installedAt: z.string().min(1),
+    durationLimitDays: z.number().positive().optional(),
+    volumeLimitLiters: z.number().positive().optional(),
+    durationControlEnabled: z.boolean(),
+    volumeControlEnabled: z.boolean(),
+    triggerMode: z.enum(['or', 'and', 'manual']),
+    warningThresholdPercent: z.number().min(1).max(99).default(80),
+  })
+  .refine((data) => data.durationControlEnabled || data.volumeControlEnabled, {
+    message: 'At least one control (time or volume) must be enabled',
+  })
+export type EditFilterCycleInput = z.infer<typeof editFilterCycleInputSchema>
+
 export const replacementReasonSchema = z.enum(['time_limit', 'volume_limit', 'both', 'preventive', 'other'])
 
 export const fillInputSchema = z

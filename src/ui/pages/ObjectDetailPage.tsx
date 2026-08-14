@@ -85,7 +85,12 @@ export function ObjectDetailPage() {
                 </p>
                 <p className="text-lg font-semibold text-ink">{filter?.name ?? '—'}</p>
               </div>
-              <StatusBadge status={usage.globalStatus.status} />
+              <div className="flex items-center gap-3">
+                <Link to={`/objects/${id}/cycle/edit`} className="text-sm text-ink-muted hover:text-ink">
+                  {t('common.edit')}
+                </Link>
+                <StatusBadge status={usage.globalStatus.status} />
+              </div>
             </div>
 
             <div>

@@ -4,8 +4,10 @@ import { evaluateGlobalStatus, evaluateTimeStatus, evaluateVolumeStatus } from '
 import type { FillEvent, FilterCycle, GlobalStatus, TimeUsage, VolumeUsage } from '../domain/types'
 import type { Repositories } from '../repository/types'
 import {
+  editFilterCycleInputSchema,
   installFilterInputSchema,
   replacementReasonSchema,
+  type EditFilterCycleInput,
   type InstallFilterInput,
 } from './validation'
 import type { z } from 'zod'
@@ -90,6 +92,29 @@ export function createFilterCycleService(repositories: Repositories) {
       })
       const created = await repositories.filterCycles.create(buildCycle(input))
       return { closed, created }
+    },
+
+    /** Edits an existing cycle's dates/limits in place (e.g. to fix a wrong installation date), without touching history. */
+    async updateCycle(cycleId: string, rawInput: EditFilterCycleInput): Promise<FilterCycle> {
+      const input = editFilterCycleInputSchema.parse(rawInput)
+      const existing = await repositories.filterCycles.findById(cycleId)
+      if (!existing) {
+        throw new Error(`Cannot update filter cycle: id "${cycleId}" not found`)
+      }
+      if (isFutureDate(input.installedAt, new Date().toISOString())) {
+        throw new Error('Installation date cannot be in the future')
+      }
+
+      return repositories.filterCycles.update(cycleId, {
+        ...existing,
+        installedAt: input.installedAt,
+        durationLimitDays: input.durationControlEnabled ? input.durationLimitDays : undefined,
+        volumeLimitLiters: input.volumeControlEnabled ? input.volumeLimitLiters : undefined,
+        durationControlEnabled: input.durationControlEnabled,
+        volumeControlEnabled: input.volumeControlEnabled,
+        triggerMode: input.triggerMode,
+        warningThresholdPercent: input.warningThresholdPercent,
+      })
     },
 
     /** Derives time/volume/status metrics for a cycle from its raw fill events. Pure delegation to domain. */
